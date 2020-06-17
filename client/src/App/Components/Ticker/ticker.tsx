@@ -8,7 +8,7 @@ function Ticker() {
   const [response, setResponse] = useState<TickerInterface>(TickerModel);
 
   useEffect(() => {
-    
+
     async function connect() {
       const socket = await socketIOClient(ENDPOINT);
       socket.on("FromAPI", (data: any) => {
@@ -18,8 +18,8 @@ function Ticker() {
     }
 
     connect()
-    
-  },[]);
+
+  }, []);
 
   return (
     <div className="ticker-wrapper">
