@@ -1,9 +1,9 @@
-const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
+import express = require("express");
+import http = require("http");
+import socketIo = require("socket.io");
 
 const port = process.env.PORT || 4001;
-const index = require("./routes/index");
+const index = require("../routes/index");
 
 const app = express();
 app.use(index);
@@ -26,8 +26,15 @@ io.on("connection", (socket) => {
   });
 });
 
+let loops = 0;
 const getApiAndEmit = socket => {
-  const response = new Date();
+  
+  loops++
+
+  const response = {
+    loops,
+    time: new Date()
+  }
   // Emitting a new message. Will be consumed by the client
   socket.emit("FromAPI", response);
 };

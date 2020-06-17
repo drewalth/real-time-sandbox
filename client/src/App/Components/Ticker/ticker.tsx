@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import socketIOClient from "socket.io-client";
+import TickerModel from '../../Models/ticker.model';
+import TickerInterface from "../../Interfaces/ticker.interfaces"
 const ENDPOINT = "http://127.0.0.1:4001";
 
 function Ticker() {
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState<TickerInterface>(TickerModel);
 
   useEffect(() => {
     
@@ -20,9 +22,13 @@ function Ticker() {
   },[]);
 
   return (
-    <p>
-      It's <time dateTime={response}>{response}</time>
-    </p>
+    <div className="ticker-wrapper">
+      <h1>Current Time:</h1>
+      <time dateTime={response.time}>{response.time}</time>
+      <hr />
+      <h1>Number of Loops:</h1>
+      <div>{response.loops}</div>
+    </div>
   );
 }
 
