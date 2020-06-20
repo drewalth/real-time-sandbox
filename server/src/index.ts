@@ -1,10 +1,16 @@
 import express = require("express");
 import http = require("http");
 import socketIo = require("socket.io");
-
+import moment = require("moment")
+import db = require("./database")
+const wildfireRoutes = require("./routes/wildfire");
+const userRoutes = require("./routes/user")
 const port = process.env.PORT || 4001;
 
 const app = express();
+
+wildfireRoutes(app, db);
+userRoutes(app)
 
 const server = http.createServer(app);
 
@@ -14,6 +20,7 @@ let interval;
 
 io.on("connection", (socket) => {
   console.log("New client connected");
+  socket.emit("connected", true)
   if (interval) {
     clearInterval(interval);
   }
@@ -31,7 +38,7 @@ const getApiAndEmit = socket => {
 
   const response = {
     loops,
-    time: new Date()
+    time: moment().format()
   }
   // Emitting a new message. Will be consumed by the client
   socket.emit("FromAPI", response);

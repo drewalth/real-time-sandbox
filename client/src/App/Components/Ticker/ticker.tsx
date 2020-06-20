@@ -11,6 +11,9 @@ function Ticker() {
 
     async function connect() {
       const socket = await socketIOClient(ENDPOINT);
+      socket.on("connected", () => {
+        alert('connected')
+      })
       socket.on("FromAPI", (data: any) => {
         setResponse(data);
       });
@@ -26,7 +29,7 @@ function Ticker() {
       <h1>Current Time:</h1>
       <time dateTime={response.time}>{response.time}</time>
       <hr />
-      <h1>Number of Loops:</h1>
+      <h1>Connection Time:</h1>
       <div>{response.loops}</div>
     </div>
   );

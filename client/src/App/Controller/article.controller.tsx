@@ -1,8 +1,7 @@
-import axios from 'axios'
+import { httpClient } from '../Utils'
 import ArticleInterface from "../Interfaces/articles.interfaces"
 
 export async function getArticle() {
-  const resp: any = await axios.get('http://localhost:4000/getArticle')
-  const article: ArticleInterface = resp.data
+  const article: ArticleInterface = await httpClient.get('http://localhost:4000/getArticle').then((res: any) => res.data)
   return article
 }
